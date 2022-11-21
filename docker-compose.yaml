@@ -1,0 +1,27 @@
+services:
+  postgres:
+    container_name: ${DB_HOST}
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_MAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PW}
+    ports:
+      - "5050:80"
+  app:
+    depends_on:
+      - postgres
+    build: .
+    container_name: psik
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/app

@@ -1,0 +1,35 @@
+scalar Date
+
+type Book {
+  book_id: ID!
+  book_name: String!
+  book_description: String!
+  number_of_pages: Int!
+  published_at: Date!
+}
+
+input StudentInput {
+  name: String!
+  last_name: String!
+  email: String!
+  date_of_birth: Date
+}
+
+type Student {
+  student_id: ID!
+  name: String!
+  last_name: String!
+  email: String!
+  date_of_birth: Date
+  books: [Book]
+}
+
+type Query {
+  students: [Student]
+  student(id: Int!): Student
+}
+
+type Mutation {
+  createStudent(input: StudentInput): Student
+  deleteStudent(id: Int!): Student
+}
